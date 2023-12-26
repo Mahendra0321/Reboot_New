@@ -1,0 +1,16 @@
+---
+- name: Reboot servers
+  hosts: all
+  become: yes  
+  
+  tasks:
+    - name: Reboot the server
+      command: reboot
+      async: 1
+      poll: 0
+      ignore_errors: yes  
+      
+    - name: Wait for server to become reachable after reboot
+      wait_for_connection:
+        delay: 30  
+        timeout: 300  
